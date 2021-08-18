@@ -22,8 +22,9 @@ def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of 
     if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended
         for student in main_dictionary:  # Iterate through the main dictionary
             if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended
-                if student[1][2] != "Neuroticism":  # Filter out Neuroticism
-                    leader_dict[student[0]] = student[1]  # Append dictionary
+                if not (student[0] in leader_dict.keys()):  # Check to make sure that student isn't already in leader_dict
+                    if student[1][2] != "Neuroticism":  # Filter out Neuroticism
+                        leader_dict[student[0]] = student[1]  # Append dictionary
 
     return leader_dict
 
