@@ -1,5 +1,6 @@
 # GRIT-LAB-GROUP
 
+# P.SHUFFLE ALGORITHM
 
 # Write a python program that creates student groupings based on their marks and their personality. 
   
