@@ -8,8 +8,8 @@ def create_student_dict(file):
         temp_student_list = temp_student_info[1:]  # Creating new temp list without student number
         student_dict[str(temp_student_info[0])] = temp_student_list  # Creating final list with student number as key
 
-    sorted_student_dict = sorted(student_dict.items(), key=lambda x: x[1][3], reverse=True)  # Sorting list via ave mark
-    return sorted_student_dict  # Returning the sorted list to caller
+    sorted_student_list = sorted(student_dict.items(), key=lambda x: x[1][3], reverse=True)  # Sorting list via ave mark
+    return sorted_student_list  # Returning the sorted list to caller
 
 
 def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of leaders
