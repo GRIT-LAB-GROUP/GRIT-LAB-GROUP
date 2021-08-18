@@ -54,6 +54,8 @@ def add_members(sorted_student_dictionary, min_number_of_groups, group_leaders):
         groups[index][1].append(leader + ', ' + ', '.join(group_leaders[leader]))
         index += 1
         
+    #add other members
+        
     return groups
 
 def display_groups(groups): #displaying all members with groups
