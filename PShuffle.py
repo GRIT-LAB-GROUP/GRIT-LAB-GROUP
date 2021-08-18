@@ -43,7 +43,32 @@ def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups 
     return max(temp_list)
 
 
-def add_members(sorted_student_dictionary, min_number_of_groups, group_leaders): #Adding members to groups
+def check_student(groups, student): #check student in each group before adding them to a group
+    found = False;
+    for group in groups:
+        for group_student in group[1]:
+            if(group_student[0] == student[0]):
+                found = True
+                break
+    return found
+
+def check_extraversion(group, student):
+    found = False;
+    for group_student in group[1]:
+        if(group_student[1][2] == "Extraversion"):
+            found = True
+            break
+    return found
+
+def check_neurotic(group, student):
+    found = False;
+    for group_student in group[1]:
+        if(group_student[1][2] == "Neuroticism"):
+            found = True
+            break
+    return found
+
+def add_members(students_in_each_group, sorted_student_dictionary, min_number_of_groups, group_leaders): #Adding members to groups
     #create groups
     groups = []
     for group in range(min_number_of_groups):
@@ -51,22 +76,72 @@ def add_members(sorted_student_dictionary, min_number_of_groups, group_leaders):
     
     #add leaders
     index = 0
+
     for leader in group_leaders:
-        groups[index][1].append(leader + ', ' + ', '.join(group_leaders[leader]))
+
+        if(int(group_leaders[leader][3]) >= 75):
+            group_leaders[leader].append("(Leader & Top student)")
+        elif(int(group_leaders[leader][3]) < 50):
+            group_leaders[leader].append("(Leader & Weak student)")
+        else:
+            group_leaders[leader].append("(Leader)")
+        
+        groups[index][1].append((leader, group_leaders[leader]))
+        sorted_student_dictionary.remove((leader, group_leaders[leader]))
+
         index += 1
+    
+    #add others
+    while (len(sorted_student_dictionary) > 0):
         
-    #add other members
+        student = sorted_student_dictionary[len(sorted_student_dictionary) - 1]
         
+        if(len(student[1]) == 4):
+            if(int(student[1][3]) >= 75):
+                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+                    student[1].append("(Top student & remaining Agreeable/Open members)")
+                elif(student[1][2] == "Neuroticism"):
+                    student[1].append("(Neurocrotic member & Top student)")
+                else:
+                    student[1].append("(Top student)")                
+            elif(int(student[1][3]) < 50):
+                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+                    student[1].append("(Weak student & remaining Agreeable/Open members)")
+                elif(student[1][2] == "Neuroticism"):
+                    student[1].append("(Neurocrotic member & Weak student)")
+                else:
+                    student[1].append("(Weak student)")
+            else:
+                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+                    student[1].append("(remaining Agreeable/Open members)")
+                elif(student[1][2] == "Neuroticism"):
+                    student[1].append("(Neurocrotic member)")
+                
+        for group in groups:
+            if(check_student(groups, student) != True and len(group[1]) < students_in_each_group):
+                if(student[1][2] == "Extraversion"):
+                    if(check_extraversion(group, student) != True):
+                        group[1].append(student)
+                        sorted_student_dictionary.pop()
+                elif(student[1][2] == "Neuroticism"):
+                    if(check_neurotic(group, student) != True):
+                        group[1].append(student)
+                        sorted_student_dictionary.pop()       
+                else:
+                    group[1].append(student)
+                    sorted_student_dictionary.pop()    
     return groups
+
 
 def display_groups(groups): #displaying all members with groups
     for group in groups:
         print (group[0])
         for member in group[1]:
-            print (member)
+            print (member[0] + ", " + ', '.join(member[1]).replace(", (", " ("))
         print ("")
 
 # Main Program
+students_in_each_group = "0"
 while True:
     students_in_each_group = input("How many students would you like to have in each group: ")  # User input
     if students_in_each_group.isdigit():  # Check if input is a digit.
@@ -85,7 +160,7 @@ if len(sorted_student_list) >= 20:
     # Get a dictionary of group leaders
     group_leaders = group_leaders(sorted_student_list, get_min_number_of_groups(sorted_student_list))
     #add members
-    groups = add_members(sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
+    groups = add_members(students_in_each_group, sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
     #display groups
     display_groups(groups)
         
