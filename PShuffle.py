@@ -78,7 +78,7 @@ while True:
         print("Please enter a valid number.")
 
 # Creating sorted dictionary of students
-sorted_student_dictionary = create_student_dict("Sample data.txt")
+sorted_student_dictionary = create_student_dict("Sample data.txt")  # This actually creates a list oops
 # Check number of students is more than 20
 if len(sorted_student_dictionary) >= 20:
     # Get a dictionary of group leaders
