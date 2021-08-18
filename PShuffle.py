@@ -38,7 +38,7 @@ def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups 
         if key[1][2] == "Neuroticism":
             neuroticism += 1
     import math
-    temp_list = [extraversion, neuroticism, math.ceil(len(sorted_student_dictionary) / students_in_each_group)]
+    temp_list = [extraversion, neuroticism, math.ceil(len(sorted_student_list) / students_in_each_group)]
 
     return max(temp_list)
 
@@ -78,14 +78,14 @@ while True:
     else:
         print("Please enter a valid number.")
 
-# Creating sorted dictionary of students
-sorted_student_dictionary = create_student_dict("Sample data.txt")  # This actually creates a list oops
+# Creating sorted list of students
+sorted_student_list = create_student_dict("Sample data.txt")  # This actually creates a list oops
 # Check number of students is more than 20
-if len(sorted_student_dictionary) >= 20:
+if len(sorted_student_list) >= 20:
     # Get a dictionary of group leaders
-    group_leaders = group_leaders(sorted_student_dictionary, get_min_number_of_groups(sorted_student_dictionary))
+    group_leaders = group_leaders(sorted_student_list, get_min_number_of_groups(sorted_student_list))
     #add members
-    groups = add_members(sorted_student_dictionary, get_min_number_of_groups(sorted_student_dictionary), group_leaders)
+    groups = add_members(sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
     #display groups
     display_groups(groups)
         
