@@ -46,7 +46,6 @@ def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups 
             neuroticism += 1
     import math
     temp_list = [extraversion, neuroticism, math.ceil(len(sorted_student_list) / students_in_each_group)]
-
     return max(temp_list)
 
 
