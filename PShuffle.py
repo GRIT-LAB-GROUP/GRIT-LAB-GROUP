@@ -14,19 +14,23 @@ def create_student_dict(file):
 
 def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of leaders
     leader_dict = {}  # Create empty dictionary
-    for student in main_dictionary:  # Iterate through the main dictionary
+    for student in main_dictionary:  # Iterate through the main dictionary which would be the sorted_student_list
         if len(leader_dict) < number_of_leader:  # Check for number of leaders to be appended to dictionary
             if student[1][2] == "Extraversion" or student[1][2] == "Conscientiousness":  # Check for leader personality
                 leader_dict[student[0]] = student[1]  # Append dictionary
 
-    if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended
-        for student in main_dictionary:  # Iterate through the main dictionary
-            if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended
+    if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended in the dictionary
+
+        for student in main_dictionary:  # Iterate through the main dictionary again
+            if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended on every for loop
+
                 if not (student[0] in leader_dict.keys()):  # Check to make sure that student isn't already in leader_dict
                     if student[1][2] != "Neuroticism":  # Filter out Neuroticism
                         leader_dict[student[0]] = student[1]  # Append dictionary
+            else:
+                break
 
-    if len(leader_dict) < number_of_leader:  # Check if still not enough leaders
+    if len(leader_dict) < number_of_leader:  # Final check if still not enough leaders
         return "Not enough students with leader attributes"
     else:
         return leader_dict
