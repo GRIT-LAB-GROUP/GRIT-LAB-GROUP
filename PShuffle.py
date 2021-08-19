@@ -131,14 +131,14 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
                 if student[1][2] == "Extraversion":
                     if check_extraversion(group) != True:
                         group[1].append(student)
-                        sorted_student_dictionary.pop()
+                        sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
                 elif student[1][2] == "Neuroticism":
                     if check_neurotic(group) != True:
                         group[1].append(student)
-                        sorted_student_dictionary.pop()       
+                        sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
                 else:
                     group[1].append(student)
-                    sorted_student_dictionary.pop()    
+                    sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
     return groups
 
 
