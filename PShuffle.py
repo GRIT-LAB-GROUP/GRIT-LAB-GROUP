@@ -127,7 +127,7 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
                     student[1].append("(Neurocrotic member)")
                 
         for group in groups:
-            if check_student(groups, student) != True and len(group[1]) < students_in_each_group:
+            if check_student(groups, student) != (True and (len(group[1]) < students_in_each_group)):  # TODO: I added some brackets here to alleviate some ambiguity please check logic
                 if student[1][2] == "Extraversion":
                     if check_extraversion(group) != True:
                         group[1].append(student)
