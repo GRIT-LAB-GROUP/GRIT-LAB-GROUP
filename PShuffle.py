@@ -47,23 +47,25 @@ def check_student(groups, student):  # check student in each group before adding
     found = False
     for group in groups:
         for group_student in group[1]:
-            if(group_student[0] == student[0]):
+            if group_student[0] == student[0]:
                 found = True
                 break
     return found
 
+
 def check_extraversion(group, student):
     found = False
     for group_student in group[1]:
-        if(group_student[1][2] == "Extraversion"):
+        if group_student[1][2] == "Extraversion":
             found = True
             break
     return found
 
+
 def check_neurotic(group, student):
     found = False
     for group_student in group[1]:
-        if(group_student[1][2] == "Neuroticism"):
+        if group_student[1][2] == "Neuroticism":
             found = True
             break
     return found
@@ -80,9 +82,9 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
 
     for leader in group_leaders:
 
-        if(int(group_leaders[leader][3]) >= 75):
+        if int(group_leaders[leader][3]) >= 75:
             group_leaders[leader].append("(Leader & Top student)")
-        elif(int(group_leaders[leader][3]) < 50):
+        elif int(group_leaders[leader][3]) < 50:
             group_leaders[leader].append("(Leader & Weak student)")
         else:
             group_leaders[leader].append("(Leader)")
@@ -93,39 +95,39 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
         index += 1
     
     # add others
-    while (len(sorted_student_dictionary) > 0):
+    while len(sorted_student_dictionary) > 0:
         
         student = sorted_student_dictionary[len(sorted_student_dictionary) - 1]
         
-        if(len(student[1]) == 4):
-            if(int(student[1][3]) >= 75):
-                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+        if len(student[1]) == 4:
+            if int(student[1][3]) >= 75:
+                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
                     student[1].append("(Top student & remaining Agreeable/Open members)")
-                elif(student[1][2] == "Neuroticism"):
+                elif student[1][2] == "Neuroticism":
                     student[1].append("(Neurocrotic member & Top student)")
                 else:
                     student[1].append("(Top student)")                
-            elif(int(student[1][3]) < 50):
-                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+            elif int(student[1][3]) < 50:
+                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
                     student[1].append("(Weak student & remaining Agreeable/Open members)")
-                elif(student[1][2] == "Neuroticism"):
+                elif student[1][2] == "Neuroticism":
                     student[1].append("(Neurocrotic member & Weak student)")
                 else:
                     student[1].append("(Weak student)")
             else:
-                if(student[1][2] == "Agreeableness" or student[1][2] == "Openness"):
+                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
                     student[1].append("(remaining Agreeable/Open members)")
-                elif(student[1][2] == "Neuroticism"):
+                elif student[1][2] == "Neuroticism":
                     student[1].append("(Neurocrotic member)")
                 
         for group in groups:
-            if(check_student(groups, student) != True and len(group[1]) < students_in_each_group):
-                if(student[1][2] == "Extraversion"):
-                    if(check_extraversion(group, student) != True):
+            if check_student(groups, student) != True and len(group[1]) < students_in_each_group:
+                if student[1][2] == "Extraversion":
+                    if check_extraversion(group, student) != True:
                         group[1].append(student)
                         sorted_student_dictionary.pop()
-                elif(student[1][2] == "Neuroticism"):
-                    if(check_neurotic(group, student) != True):
+                elif student[1][2] == "Neuroticism":
+                    if check_neurotic(group, student) != True:
                         group[1].append(student)
                         sorted_student_dictionary.pop()       
                 else:
@@ -140,6 +142,7 @@ def display_groups(groups):  # displaying all members with groups
         for member in group[1]:
             print (member[0] + ", " + ', '.join(member[1]).replace(", (", " ("))
         print ("")
+
 
 # Main Program
 students_in_each_group = "0"
