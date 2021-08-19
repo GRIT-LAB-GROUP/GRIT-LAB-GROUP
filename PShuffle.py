@@ -26,7 +26,10 @@ def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of 
                     if student[1][2] != "Neuroticism":  # Filter out Neuroticism
                         leader_dict[student[0]] = student[1]  # Append dictionary
 
-    return leader_dict
+    if len(leader_dict) < number_of_leader:  # Check if still not enough leaders
+        return "Not enough students with leader attributes"
+    else:
+        return leader_dict
 
 
 def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups required
@@ -163,10 +166,13 @@ sorted_student_list = create_student_dict("Sample data.txt")  # This actually cr
 if len(sorted_student_list) >= 20:
     # Get a dictionary of group leaders
     group_leaders = group_leaders(sorted_student_list, get_min_number_of_groups(sorted_student_list))
-    # add members
-    groups = add_members(students_in_each_group, sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
-    # display groups
-    display_groups(groups)
+    if group_leaders == "Not enough students with leader attributes":  # Catch if there is not enough leaders with leader attributes
+        print("Error! Not enough students with leader attributes")
+    else:
+        # add members
+        groups = add_members(students_in_each_group, sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
+        # display groups
+        display_groups(groups)
         
 else:
     print("Not enough students in Student Dataset.")
