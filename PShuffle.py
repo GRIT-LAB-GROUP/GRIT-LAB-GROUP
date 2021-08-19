@@ -53,7 +53,7 @@ def check_student(groups, student):  # check student in each group before adding
     return found
 
 
-def check_extraversion(group, student):
+def check_extraversion(group):
     found = False
     for group_student in group[1]:
         if group_student[1][2] == "Extraversion":
@@ -62,7 +62,7 @@ def check_extraversion(group, student):
     return found
 
 
-def check_neurotic(group, student):
+def check_neurotic(group):
     found = False
     for group_student in group[1]:
         if group_student[1][2] == "Neuroticism":
@@ -123,11 +123,11 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
         for group in groups:
             if check_student(groups, student) != True and len(group[1]) < students_in_each_group:
                 if student[1][2] == "Extraversion":
-                    if check_extraversion(group, student) != True:
+                    if check_extraversion(group) != True:
                         group[1].append(student)
                         sorted_student_dictionary.pop()
                 elif student[1][2] == "Neuroticism":
-                    if check_neurotic(group, student) != True:
+                    if check_neurotic(group) != True:
                         group[1].append(student)
                         sorted_student_dictionary.pop()       
                 else:
