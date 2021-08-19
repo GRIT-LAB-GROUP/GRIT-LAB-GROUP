@@ -44,7 +44,7 @@ def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups 
 
 
 def check_student(groups, student):  # check student in each group before adding them to a group
-    found = False;
+    found = False
     for group in groups:
         for group_student in group[1]:
             if(group_student[0] == student[0]):
@@ -53,7 +53,7 @@ def check_student(groups, student):  # check student in each group before adding
     return found
 
 def check_extraversion(group, student):
-    found = False;
+    found = False
     for group_student in group[1]:
         if(group_student[1][2] == "Extraversion"):
             found = True
@@ -61,7 +61,7 @@ def check_extraversion(group, student):
     return found
 
 def check_neurotic(group, student):
-    found = False;
+    found = False
     for group_student in group[1]:
         if(group_student[1][2] == "Neuroticism"):
             found = True
