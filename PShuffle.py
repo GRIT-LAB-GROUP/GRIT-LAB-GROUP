@@ -148,32 +148,42 @@ def display_groups(groups):  # displaying all members with groups
 
 
 # Main Program
-students_in_each_group = "0"
+students_in_each_group = "0"  # Initialise variable
+
 while True:
     students_in_each_group = input("How many students would you like to have in each group: ")  # User input
+
     if students_in_each_group.isdigit():  # Check if input is a digit.
         students_in_each_group = int(students_in_each_group)
+
         if students_in_each_group >= 4:  # Check if input is more than 4.
             break
+
         else:
             print("There is a minimum of 4 members per group.")
+
     else:
         print("Please enter a valid number.")
 
 # Creating sorted list of students
-sorted_student_list = create_student_dict("Sample data.txt")  # This actually creates a list oops
+sorted_student_list = create_student_dict("Sample data.txt")
+
 # Check number of students is more than 20
 if len(sorted_student_list) >= 20:
+
     # Get a dictionary of group leaders
     group_leaders = group_leaders(sorted_student_list, get_min_number_of_groups(sorted_student_list))
-    if group_leaders == "Not enough students with leader attributes":  # Catch if there is not enough leaders with leader attributes
+
+    # Catch if there is not enough leaders with leader attributes
+    if group_leaders == "Not enough students with leader attributes":
         print("Error! Not enough students with leader attributes")
+
     else:
         # add members
         groups = add_members(students_in_each_group, sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
         # display groups
         display_groups(groups)
-        
+
 else:
     print("Not enough students in Student Dataset.")
 
