@@ -43,7 +43,7 @@ def get_min_number_of_groups(sorted_student_dict):  # Gets the number of groups 
     return max(temp_list)
 
 
-def check_student(groups, student): #check student in each group before adding them to a group
+def check_student(groups, student):  # check student in each group before adding them to a group
     found = False;
     for group in groups:
         for group_student in group[1]:
@@ -68,13 +68,14 @@ def check_neurotic(group, student):
             break
     return found
 
-def add_members(students_in_each_group, sorted_student_dictionary, min_number_of_groups, group_leaders): #Adding members to groups
-    #create groups
+
+def add_members(students_in_each_group, sorted_student_dictionary, min_number_of_groups, group_leaders):  # Adding members to groups
+    # create groups
     groups = []
     for group in range(min_number_of_groups):
         groups.append(("Group " + str((group + 1)), []))
     
-    #add leaders
+    # add leaders
     index = 0
 
     for leader in group_leaders:
@@ -91,7 +92,7 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
 
         index += 1
     
-    #add others
+    # add others
     while (len(sorted_student_dictionary) > 0):
         
         student = sorted_student_dictionary[len(sorted_student_dictionary) - 1]
@@ -133,7 +134,7 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
     return groups
 
 
-def display_groups(groups): #displaying all members with groups
+def display_groups(groups):  # displaying all members with groups
     for group in groups:
         print (group[0])
         for member in group[1]:
@@ -159,9 +160,9 @@ sorted_student_list = create_student_dict("Sample data.txt")  # This actually cr
 if len(sorted_student_list) >= 20:
     # Get a dictionary of group leaders
     group_leaders = group_leaders(sorted_student_list, get_min_number_of_groups(sorted_student_list))
-    #add members
+    # add members
     groups = add_members(students_in_each_group, sorted_student_list, get_min_number_of_groups(sorted_student_list), group_leaders)
-    #display groups
+    # display groups
     display_groups(groups)
         
 else:
