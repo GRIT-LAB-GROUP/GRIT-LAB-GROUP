@@ -127,18 +127,18 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
                     student[1].append("(Neurocrotic member)")
                 
         for group in groups:
-            if (check_student(groups, student) != True) and len(group[1]) < students_in_each_group:  # TODO: Added brackets to alleviate ambiguity please check logic
+            if (check_student(groups, student) != True) and len(group[1]) < students_in_each_group:
                 if student[1][2] == "Extraversion":
                     if check_extraversion(group) != True:
                         group[1].append(student)
-                        sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
+                        sorted_student_dictionary.pop()
                 elif student[1][2] == "Neuroticism":
                     if check_neurotic(group) != True:
                         group[1].append(student)
-                        sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
+                        sorted_student_dictionary.pop()
                 else:
                     group[1].append(student)
-                    sorted_student_dictionary.pop()  # TODO: Double check if intended behaviour?
+                    sorted_student_dictionary.pop()
     return groups
 
 
