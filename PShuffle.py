@@ -17,8 +17,9 @@ def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of 
     for student in main_dictionary:  # Iterate through the main dictionary which would be the sorted_student_list
         if len(leader_dict) < number_of_leader:  # Check for number of leaders to be appended to dictionary
             if student[1][2] == "Extraversion" or student[1][2] == "Conscientiousness":  # Check for leader personality
-                leader_dict[student[0]] = student[1]  # Append dictionary
-
+                if(int(student[1][3]) > 50): #check if student is not weak
+                    leader_dict[student[0]] = student[1]  # Append dictionary
+    
     if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended in the dictionary
 
         for student in main_dictionary:  # Iterate through the main dictionary again
@@ -59,6 +60,14 @@ def check_student(groups, student):  # check student in each group before adding
     return found
 
 
+def count_extraversion_per_group(sorted_student_dictionary, min_number_of_groups):
+    count = 0
+    for student in sorted_student_dictionary:     
+        if student[1][2] == "Extraversion":
+            count += 1
+    import math
+    return int(math.ceil(float(count) / float(min_number_of_groups)))
+
 def check_extraversion(group):
     found = False
     for group_student in group[1]:
@@ -66,6 +75,15 @@ def check_extraversion(group):
             found = True
             break
     return found
+
+
+def count_neurotic_per_group(sorted_student_dictionary, min_number_of_groups):
+    count = 0
+    for student in sorted_student_dictionary:     
+        if student[1][2] == "Neuroticism":
+            count += 1
+    import math
+    return int(math.ceil(float(count) / float(min_number_of_groups)))
 
 
 def check_neurotic(group):
@@ -76,6 +94,44 @@ def check_neurotic(group):
             break
     return found
 
+def count_weak_student_per_group(sorted_student_dictionary, min_number_of_groups):
+    count = 0
+    for student in sorted_student_dictionary:     
+        if int(student[1][3]) < 50:
+            count += 1
+    import math
+    return int(math.ceil(float(count) / float(min_number_of_groups)))
+
+def check_weak_student(group):
+    found = False
+    for group_student in group[1]:
+        if int(group_student[1][3]) < 50:
+            found = True
+            break
+    return found
+
+def set_student_personality(student):
+    if len(student[1]) == 4:
+        if int(student[1][3]) >= 75:
+            if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
+                student[1].append("(Top student & remaining Agreeable/Open members)")
+            elif student[1][2] == "Neuroticism":
+                student[1].append("(Neurocrotic member & Top student)")
+            else:
+                student[1].append("(Top student)")                
+        elif int(student[1][3]) < 50:
+            if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
+                student[1].append("(Weak student & remaining Agreeable/Open members)")
+            elif student[1][2] == "Neuroticism":
+                student[1].append("(Neurocrotic member & Weak student)")
+            else:
+                student[1].append("(Weak student)")
+        else:
+            if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
+                student[1].append("(remaining Agreeable/Open members)")
+            elif student[1][2] == "Neuroticism":
+                student[1].append("(Neurocrotic member)")
+    return student
 
 def add_members(students_in_each_group, sorted_student_dictionary, min_number_of_groups, group_leaders):  # Adding members to groups
     # create groups
@@ -85,7 +141,6 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
     
     # add leaders
     index = 0
-
     for leader in group_leaders:
 
         if int(group_leaders[leader][3]) >= 75:
@@ -99,46 +154,64 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
         sorted_student_dictionary.remove((leader, group_leaders[leader]))
 
         index += 1
-    
-    # add others
-    while len(sorted_student_dictionary) > 0:
-        
-        student = sorted_student_dictionary[len(sorted_student_dictionary) - 1]
-        
-        if len(student[1]) == 4:
-            if int(student[1][3]) >= 75:
-                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
-                    student[1].append("(Top student & remaining Agreeable/Open members)")
-                elif student[1][2] == "Neuroticism":
-                    student[1].append("(Neurocrotic member & Top student)")
-                else:
-                    student[1].append("(Top student)")                
-            elif int(student[1][3]) < 50:
-                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
-                    student[1].append("(Weak student & remaining Agreeable/Open members)")
-                elif student[1][2] == "Neuroticism":
-                    student[1].append("(Neurocrotic member & Weak student)")
-                else:
-                    student[1].append("(Weak student)")
-            else:
-                if student[1][2] == "Agreeableness" or student[1][2] == "Openness":
-                    student[1].append("(remaining Agreeable/Open members)")
-                elif student[1][2] == "Neuroticism":
-                    student[1].append("(Neurocrotic member)")
+
+    #Add weak students
+    weak_student_per_group = count_weak_student_per_group(sorted_student_dictionary, min_number_of_groups)
+    if(weak_student_per_group == 0):
+        weak_student_per_group = 1
+    for i in range(weak_student_per_group):
+        for group in groups:
+            if(check_weak_student(group) == True and weak_student_per_group <= len(groups)):
+                continue
+            for weak_student_in in sorted_student_dictionary:
+                if (int(weak_student_in[1][3]) < 50):
+                    sorted_student_dictionary.remove(weak_student_in)
+                    weak_student_in = set_student_personality(weak_student_in)
+                    group[1].append(weak_student_in)
+                    break;
                 
+    #add Extraversion
+    extraversion_student_per_group = count_extraversion_per_group(sorted_student_dictionary, min_number_of_groups)
+    if(extraversion_student_per_group == 0):
+        extraversion_student_per_group = 1
+    for i in range(extraversion_student_per_group):
+        for group in groups:
+            if(check_extraversion(group) == True and extraversion_student_per_group <= len(groups)):
+                continue
+            for extraversion_in in sorted_student_dictionary:
+                if extraversion_in[1][2] == "Extraversion":
+                    sorted_student_dictionary.remove(extraversion_in)
+                    extraversion_in = set_student_personality(extraversion_in)
+                    group[1].append(extraversion_in)
+                    break;                      
+    
+    #add Neuroticism
+    neurotic_student_per_group = count_neurotic_per_group(sorted_student_dictionary, min_number_of_groups)
+    if(neurotic_student_per_group == 0):
+        neurotic_student_per_group = 1
+    for i in range(neurotic_student_per_group):
+        for group in groups:
+            if(check_neurotic(group) == True and neurotic_student_per_group <= len(groups)):
+                continue
+            for neurotic_in in sorted_student_dictionary:                
+                if neurotic_in[1][2] == "Neuroticism":
+                    sorted_student_dictionary.remove(neurotic_in)
+                    neurotic_in = set_student_personality(neurotic_in)
+                    group[1].append(neurotic_in)
+                    break;      
+                
+ 
+    # add others
+    import random
+    while len(sorted_student_dictionary) > 0:      
+        random.shuffle(sorted_student_dictionary)     
+        student = sorted_student_dictionary[len(sorted_student_dictionary) - 1]       
+        student = set_student_personality(student)               
         for group in groups:
             if (check_student(groups, student) != True) and len(group[1]) < students_in_each_group:
-                if student[1][2] == "Extraversion":
-                    if check_extraversion(group) != True:
-                        group[1].append(student)
-                        sorted_student_dictionary.pop()
-                elif student[1][2] == "Neuroticism":
-                    if check_neurotic(group) != True:
-                        group[1].append(student)
-                        sorted_student_dictionary.pop()
-                else:
-                    group[1].append(student)
-                    sorted_student_dictionary.pop()
+                group[1].append(student)
+                sorted_student_dictionary.pop()
+                                  
     return groups
 
 
@@ -190,3 +263,4 @@ if len(sorted_student_list) >= 20:
 else:
     print("Not enough students in Student Dataset.")
 
+   

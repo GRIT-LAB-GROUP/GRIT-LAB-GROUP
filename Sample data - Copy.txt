@@ -1,10 +1,10 @@
 21904236, Ellie, Fredricksen, Agreeableness, 67
 21792608, Cornelius, Robinson, Neuroticism, 71
-24789033, Gordie, Gibble, Conscientiousness, 35
+24789033, Gordie, Gibble, Conscientiousness, 75
 21573892, Lilo, Pelekai, Openness, 49
 21785092, Lucille, Krunklehorn, Conscientiousness, 49
 21589057, Imelda, Rivera, Extraversion, 71
-21789035, Cass, Hamada, Extraversion, 30	
+21789035, Cass, Hamada, Extraversion, 73
 21090679, Georges, Hautecourt, Openness, 43
 21798540, Sylvia, Marpole, Extraversion, 95
 21456378, Remy, Remington, Openness, 68
@@ -18,6 +18,6 @@
 21786792, Lizzy, Griffiths, Agreeableness, 76
 21789900, Lavender, Bloom, Agreeableness, 56
 21285790, Jackie, Wackerman, Neuroticism, 34
-21357854, Li, Shang, Conscientiousness, 50
+21357854, Li, Shang, Conscientiousness, 71
 21902789, Benjamin, Clawhauser, Openness, 66
 21978546, Miranda, Wright, Agreeableness, 82
