@@ -111,6 +111,22 @@ def check_weak_student(group):
             break
     return found
 
+def count_top_student_per_group(sorted_student_dictionary, min_number_of_groups):
+    count = 0
+    for student in sorted_student_dictionary:     
+        if int(student[1][3]) >= 75:
+            count += 1
+    import math
+    return int(math.ceil(float(count) / float(min_number_of_groups)))
+
+def check_top_student(group):
+    found = False
+    for group_student in group[1]:
+        if int(group_student[1][3]) >= 75:
+            found = True
+            break
+    return found
+
 def set_student_personality(student):
     if len(student[1]) == 4:
         if int(student[1][3]) >= 75:
@@ -155,6 +171,21 @@ def add_members(students_in_each_group, sorted_student_dictionary, min_number_of
         sorted_student_dictionary.remove((leader, group_leaders[leader]))
 
         index += 1
+        
+    #Add top students
+    top_student_per_group = count_top_student_per_group(sorted_student_dictionary, min_number_of_groups)
+    if(top_student_per_group == 0):
+        top_student_per_group = 1
+    for i in range(top_student_per_group):
+        for group in groups:
+            if(check_top_student(group) == True and top_student_per_group <= len(groups)):
+                continue
+            for top_student_in in sorted_student_dictionary:
+                if (int(top_student_in[1][3]) >= 75):
+                    sorted_student_dictionary.remove(top_student_in)
+                    top_student_in = set_student_personality(top_student_in)
+                    group[1].append(top_student_in)
+                    break;
 
     #Add weak students
     weak_student_per_group = count_weak_student_per_group(sorted_student_dictionary, min_number_of_groups)
