@@ -16,16 +16,18 @@ def group_leaders(main_dictionary, number_of_leader):  # Create a dictionary of 
     leader_dict = {}  # Create empty dictionary
     for student in main_dictionary:  # Iterate through the main dictionary which would be the sorted_student_list
         if len(leader_dict) < number_of_leader:  # Check for number of leaders to be appended to dictionary
-            if student[1][2] == "Extraversion" or student[1][2] == "Conscientiousness":  # Check for leader personality
+            # Check for leader personality and that they are not a weak student
+            if (student[1][2] == "Extraversion" or student[1][2] == "Conscientiousness") and student[1][3] > "50":
                 leader_dict[student[0]] = student[1]  # Append dictionary
 
     if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended in the dictionary
-
+        # Will add more leaders to dictionary if not enough students with the preferred traits are present.
+        # Preferred traits: Extraversion, Conscientiousness, and weak students
         for student in main_dictionary:  # Iterate through the main dictionary again
             if len(leader_dict) < number_of_leader:  # Check if enough leaders are appended on every for loop
 
                 if not (student[0] in leader_dict.keys()):  # Check to make sure that student isn't already in leader_dict
-                    if student[1][2] != "Neuroticism":  # Filter out Neuroticism
+                    if student[1][2] != "Neuroticism":  # Filter out Neuroticism as it is unwanted in a leader
                         leader_dict[student[0]] = student[1]  # Append dictionary
             else:
                 break
